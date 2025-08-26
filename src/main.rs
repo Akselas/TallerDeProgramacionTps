@@ -1,3 +1,22 @@
+//! Reads operations from a set of files, and applies them to the calculator.
+//!
+//! How to run:
+//! ```bash
+//! cargo run -- data/*
+//! ```
+//!
+//! At the end, prints the final result.
+//!
+//! TASK 1:
+//! Convert this sequential algorithm, into a concurrent one.
+//! You need to create threads and use locks for synchronization.
+//!
+//! TASK 2:
+//! Remove the locks and rely solely on channels for synchronization.
+//!
+//! BONUS:
+//! Benchmark each implementation.
+
 use std::{
     fs::File,
     io::{BufRead, BufReader},
@@ -33,7 +52,6 @@ impl FromStr for Operation {
         // Parse the operand into an u8.
         let operand: u8 = operand.parse().map_err(|_| "operand is not an u8")?;
 
-        // Build the operation.
         match operation {
             "+" => Ok(Operation::Add(operand)),
             "-" => Ok(Operation::Sub(operand)),
@@ -75,16 +93,13 @@ pub fn main() {
 
         // We need to create a BufReader for the file.
         //
-        // From the stdlib documentation:
-        // > The `BufReader<R>` struct adds buffering to any reader.
-        // >
-        // > It can be excessively inefficient to work directly with a [`Read`] instance.
-        // > For example, every call to [`read`][`TcpStream::read`] on [`TcpStream`]
-        // > results in a system call. A `BufReader<R>` performs large, infrequent reads on
-        // > the underlying [`Read`] and maintains an in-memory buffer of the results.
+        // It can be excessively inefficient to work directly with a reader,
+        // as each read results in a system call. A buffered readered performs
+        // large, infrequent reads on the underlying reader and maintains an
+        // in-memory buffer of the results.
         //
-        // This allows us to iterate over the lines of a file easily, instead of having
-        // to do it manually.
+        // This allows us to iterate over the lines of a file easily, instead of
+        // having to do it manually.
         let file_reader = BufReader::new(file);
 
         for line in file_reader.lines() {
