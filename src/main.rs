@@ -23,7 +23,7 @@ use std::{
     str::FromStr,
 };
 
-// A basic calculator in modulo arithmetic.
+// A basic wrapping u8 calculator.
 //
 // The possible values range from [0;256).
 #[derive(Default)]
@@ -97,11 +97,9 @@ pub fn main() {
         // as each read results in a system call. A buffered readered performs
         // large, infrequent reads on the underlying reader and maintains an
         // in-memory buffer of the results.
-        //
-        // This allows us to iterate over the lines of a file easily, instead of
-        // having to do it manually.
         let file_reader = BufReader::new(file);
 
+        // A buffered reader also implements useful methods, like `lines()`
         for line in file_reader.lines() {
             // The underlying reader (file) may fail. In that case, we print the
             // error and skip the current file.
@@ -119,7 +117,7 @@ pub fn main() {
                 Ok(operation) => operation,
                 Err(error) => {
                     eprintln!("failed to parse line {}", error);
-                    break;
+                    continue;
                 }
             };
 
