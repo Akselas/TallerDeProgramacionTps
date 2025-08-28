@@ -1,21 +1,26 @@
-//! Reads operations from a set of files, and applies them to the calculator.
+//! Lee operaciones de una lista de archivos, y las aplica.
 //!
-//! How to run:
+//! Una vez procesados todos los archivos, imprime el resultado final.
+//!
+//! # Uso
+//!
+//! Para procesar todos los archivos de la carpeta `data/`, ejecutar:
 //! ```bash
 //! cargo run -- data/*
 //! ```
+//! El resultado esperado de una ejecución secuencial es 26.
 //!
-//! At the end, prints the final result.
+//! # Ejercicios
 //!
-//! TASK 1:
-//! Convert this sequential algorithm, into a concurrent one.
-//! You need to create threads and use locks for synchronization.
+//! ## Ejercicio 1
 //!
-//! TASK 2:
-//! Remove the locks and rely solely on channels for synchronization.
+//! Utilizar threads y locks para procesar los archivos de forma concurrente.
 //!
-//! BONUS:
-//! Benchmark each implementation.
+//! NOTA: Una ejecución concurrente daría un resultado distinto.
+//!
+//! ## Ejercicio 2
+//!
+//! En lugar de utilizar locks para sincronizar el acceso a un recurso compartido, utilizar channels.
 
 use std::{
     fs::File,
