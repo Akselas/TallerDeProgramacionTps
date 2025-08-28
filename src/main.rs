@@ -2,7 +2,7 @@
 //!
 //! Una vez procesados todos los archivos, imprime el resultado final.
 //!
-//! # Uso
+//! ## Uso
 //!
 //! Para procesar todos los archivos de la carpeta `data/`, ejecutar:
 //! ```bash
@@ -10,15 +10,15 @@
 //! ```
 //! El resultado esperado de una ejecución secuencial es 26.
 //!
-//! # Ejercicios
+//! ## Ejercicios
 //!
-//! ## Ejercicio 1
+//! ### Ejercicio 1
 //!
 //! Utilizar threads y locks para procesar los archivos de forma concurrente.
 //!
 //! NOTA: Una ejecución concurrente daría un resultado distinto.
 //!
-//! ## Ejercicio 2
+//! ### Ejercicio 2
 //!
 //! En lugar de utilizar locks para sincronizar el acceso a un recurso compartido, utilizar channels.
 
