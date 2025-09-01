@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "ejercicios"
+name = "laboratorio-concurrencia"
 version = "0.1.0"
