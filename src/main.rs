@@ -22,7 +22,7 @@
 //!
 //! En lugar de utilizar locks para sincronizar el acceso a un recurso compartido, utilizar channels.
 //!
-//! ### Bonus 1
+//! ### Bonus
 //!
 //! Medir la diferencia de performance entre los 3 enfoques.
 
