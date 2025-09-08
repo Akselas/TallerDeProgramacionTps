@@ -8,6 +8,7 @@ enum Operation {
     Get,
 }
 
+#[derive(PartialEq, Eq, Debug)]
 enum Response {
     Yes,
     No,
@@ -20,10 +21,8 @@ impl FromStr for Operation {
     type Err = &'static str;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        // Split the string into tokens separated by whitespace.
         let tokens: Vec<&str> = s.split_whitespace().collect();
 
-        // Try to convert the vector into a statically-sized array of 2 elements, failing otherwise.
         let operation = *tokens
             .first()
             .ok_or("expected operation as first argument")?;
