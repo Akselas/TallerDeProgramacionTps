@@ -10,11 +10,16 @@ enum Operation {
 
 #[derive(PartialEq, Eq, Debug)]
 enum Response {
-    Yes, //Respuesta del Contains
-    No, //Respuesta del Contains
-    Ok, //Respuesta del Insert y Remove exitoso
-    Values(Vec<u8>), //Respuesta del Get
-    Error(String), //Respuesta de cualquier operacion que falle
+    /// Respuesta del Contains
+    Yes,
+    /// Respuesta del Contains
+    No,
+    ///Respuesta del Insert y Remove exitoso
+    Ok,
+    /// Respuesta del Get
+    Values(Vec<u8>),
+    /// Respuesta de cualquier operacion que falle
+    Error(String),
 }
 
 impl FromStr for Operation {
@@ -102,6 +107,22 @@ fn main() {
     println!("El servidor se debería bindear al puerto {}", port);
 }
 
+// NO recomendamos usar strings para los errores de su programa.
+// Recomendamos enums, lo hacemos por temas de tiempo ;)
+fn parse_arguments() -> Result<u16, &'static str> {
+    let mut inputs = std::env::args();
+
+    inputs.next();
+
+    let port_str = inputs
+        .next()
+        .ok_or("missing port. Usage: cargo run --bin server -- <port>")?;
+
+    let port: u16 = port_str.parse().map_err(|_| "port must be a valid u16")?;
+
+    Ok(port)
+}
+
 #[cfg(test)]
 mod test {
     use std::str::FromStr;
@@ -141,17 +162,4 @@ mod test {
             assert_eq!(response_string, expected_response_string)
         }
     }
-}
-
-// NO recomendamos usar strings para los errores de su programa. Recomendamos enums, lo hacemos por temas de tiempo ;)
-fn parse_arguments() -> Result<u16, &'static str> {
-    let mut inputs = std::env::args();
-
-    inputs.next();
-
-    let port_str = inputs.next().ok_or("missing port. Usage: cargo run --bin server -- <port>")?;
-
-    let port: u16 = port_str.parse().map_err(|_| "port must be a valid u16")?;
-
-    Ok(port)
 }
