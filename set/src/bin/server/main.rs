@@ -90,6 +90,16 @@ fn main() {
     let _ = Response::No.to_string();
     let _ = Response::Values(vec![1, 2, 3]).to_string();
     let _ = Response::Error(String::from("failure")).to_string();
+
+    let port: u16 = match parse_arguments() {
+        Ok(port) => port,
+        Err(err) => {
+            eprintln!("{}", err);
+            return;
+        }
+    };
+
+    println!("El servidor se debería bindear al puerto {}", port);
 }
 
 #[cfg(test)]
@@ -131,4 +141,17 @@ mod test {
             assert_eq!(response_string, expected_response_string)
         }
     }
+}
+
+// NO recomendamos usar strings para los errores de su programa. Recomendamos enums, lo hacemos por temas de tiempo ;)
+fn parse_arguments() -> Result<u16, &'static str> {
+    let mut inputs = std::env::args();
+
+    inputs.next();
+
+    let port_str = inputs.next().ok_or("missing port. Usage: cargo run --bin server -- <port>")?;
+
+    let port: u16 = port_str.parse().map_err(|_| "port must be a valid u16")?;
+
+    Ok(port)
 }

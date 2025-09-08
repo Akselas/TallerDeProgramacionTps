@@ -29,10 +29,16 @@ cargo run --bin server -- <puerto>
 
 ### Cliente
 
-El cleinte se debe poder ejecutar de la siguiente forma:
+El cliente se debe poder ejecutar de la siguiente forma:
 
 ```bash
-cargo run --bin client -- <host> <puerto>
+cargo run --bin client -- <host:puerto> <operacion>
+```
+
+Las operaciones se pueden pasar entre comillas dobles o simples, por ejemplo:
+
+```bash
+cargo run --bin client -- "localhost:3000" "INSERT 42"
 ```
 
 ## Protocolo de comunicación
