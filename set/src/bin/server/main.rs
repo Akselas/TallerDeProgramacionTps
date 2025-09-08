@@ -10,11 +10,11 @@ enum Operation {
 
 #[derive(PartialEq, Eq, Debug)]
 enum Response {
-    Yes,
-    No,
-    Ok,
-    Values(Vec<u8>),
-    Error(String),
+    Yes, //Respuesta del Contains
+    No, //Respuesta del Contains
+    Ok, //Respuesta del Insert y Remove exitoso
+    Values(Vec<u8>), //Respuesta del Get
+    Error(String), //Respuesta de cualquier operacion que falle
 }
 
 impl FromStr for Operation {

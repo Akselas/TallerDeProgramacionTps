@@ -14,9 +14,9 @@ El servidor debe contar con las siguientes características:
 - Aceptar conexiones concurrentes de múltiples clientes
   - Manejar a cada cliente en un hilo separado.
 - Procesar las siguientes operaciones:
-    - **INSERT**: Agregar un elemento al conjunto
-    - **REMOVE**: Eliminar un elemento del conjunto
-    - **CONTAINS**: Verificar si un elemento existe en el conjunto
+    - **INSERT <number>**: Agregar un elemento al conjunto
+    - **REMOVE <number>**: Eliminar un elemento del conjunto
+    - **CONTAINS <number>**: Verificar si un elemento existe en el conjunto
     - **GET**: Obtener todos los elementos del conjunto
 - Enviar respuestas apropiadas a cada cliente indicando el resultado de la operación
 - Manejar la concurrencia de forma segura para evitar condiciones de carrera
