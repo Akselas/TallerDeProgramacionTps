@@ -3,12 +3,4 @@ name = "set"
 version = "0.1.0"
 edition = "2024"
 
-[[bin]]
-name = "server"
-path = "src/bin/server/main.rs"
-
-[[bin]]
-name = "client"
-path = "src/bin/client/main.rs"
-
 [dependencies]
