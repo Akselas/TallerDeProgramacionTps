@@ -4,7 +4,7 @@ El ejercicio de la clase de hoy consiste en la implementación de una aplicació
 
 ## Comportamiento del programa
 
-El servidor se comporta como un set centralizado, que permite a múltiples clientes conectarse simultáneamente y realizar operaciones sobre un conjunto compartido. Cada operación modifica o consulta el estado actual del servidor.
+El servidor se comporta como un [set](https://en.wikipedia.org/wiki/Set_(abstract_data_type)) centralizado, que permite a múltiples clientes conectarse simultáneamente y realizar operaciones sobre un conjunto compartido. Cada operación modifica o consulta el estado actual del servidor.
 
 ## Servidor
 
@@ -43,17 +43,23 @@ cargo run --bin client -- "localhost:3000" "INSERT 42"
 
 ## Protocolo de comunicación
 
-- El protocolo seguirá la siguiente forma, en notación BNF:
+La especificación formal de los mensajes del protocolo está dada en [notación Backus-Naur](https://es.wikipedia.org/wiki/Notaci%C3%B3n_de_Backus-Naur) (BNF).
 
 ```
-<mensaje-cliente> ::= <operacion> <eom>
-<operacion> ::= <insert> | <remove> | <contains> | <get>
+<mensaje> ::= <body> <eom>
+<body> ::= <insert> | <remove> | <contains> | <get> | <ok> | <yes> | <no> | <values> | <error>
 
 <insert> ::= "INSERT" <ws> <numero>
 <remove> ::= "REMOVE" <ws> <numero>
 <contains> ::= "CONTAINS" <ws> <numero>
 <get> ::= "GET"
+<ok> ::= "OK"
+<yes> ::= "YES"
+<no> ::= "NO"
+<values> ::= "VALUES" [ <numeros> ]
+<error> ::= "GET"
 
+<numeros> ::= <numero> [ " " <numeros> ]
 <numero> ::= número de 8 bits (0-255)
 <ws> ::= whitespace
 <eom> ::= "\n"
