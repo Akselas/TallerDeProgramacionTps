@@ -1,6 +1,25 @@
-use std::{fmt::Display, str::FromStr};
+use std::{fmt::Display, io::Read, net::TcpListener, str::FromStr};
 
 #[derive(PartialEq, Eq, Debug)]
+
+struct conjunto{
+    conjunto_num : Vec<u8>,
+}
+impl conjunto{
+    fn new() -> Self {
+        Self {
+            conjunto_num: Vec::new(),
+        }
+    }
+    fn insert(&mut self, num: u8) -> bool {
+        if self.conjunto_num.contains(&num) {
+            return false
+        } else {
+            self.conjunto_num.push(num);
+            return true
+        }
+    }
+}
 enum Operation {
     Insert(u8),
     Contains(u8),
@@ -40,6 +59,7 @@ impl FromStr for Operation {
                     .parse()
                     .map_err(|_| "failed to parse number")?;
 
+                println!("ENTRO A INSERT");
                 Ok(Operation::Insert(operand))
             }
             "CONTAINS" => {
@@ -104,7 +124,38 @@ fn main() {
         }
     };
 
-    println!("El servidor se debería bindear al puerto {}", port);
+
+
+    // Creo el listener
+    let param = "localhost:{}".replace("{}", &port.to_string());
+    let listener = TcpListener::bind(param);
+    match listener {
+        Ok(listener) => {
+            for stream in listener.incoming() {
+                let mut stream = stream.unwrap();
+
+                let mut buffer = [0; 1024];
+                stream.read(&mut buffer).unwrap();
+
+                let data_received = String::from_utf8_lossy(&buffer);
+                Operation::from_str(&data_received).unwrap();
+
+                println!("Contenido del buffer: {}", data_received);
+                
+                println!("Conexion establecida!");
+            }
+            println!("Servidor escuchando en el puerto {}", port)
+        },
+        Err(e) => {
+            eprintln!("No se pudo bindear el puerto {}, error: {}", port, e);
+            return;
+        }
+    }
+    
+    
+
+    
+    //println!("El servidor se debería bindear al puerto {}", port);
 }
 
 // NO recomendamos usar strings para los errores de su programa.
